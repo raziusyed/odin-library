@@ -36,22 +36,29 @@ library.forEach(book => {
     const titleP = document.createElement("p");
     const authorP = document.createElement("p");
     const pagesP = document.createElement("p");
+    const isRead = document.createElement("input");
+    const isReadLabel = document.createElement("label");
 
     image.setAttribute("src", "images/book.svg");
     imageContainer.classList.add("imageContainer");
     imageContainer.appendChild(image);
-    
+
     titleP.textContent = title;
     titleP.classList.add("bookTitle");
 
     authorP.textContent = "by: " + author;
     authorP.classList.add("bookAuthor");
-    
+
     pagesP.textContent = pages + " pages";
     pagesP.classList.add("bookPages");
 
+    isRead.type = "checkbox";
+    isRead.checked = read;
+    isReadLabel.appendChild(isRead);
+    isReadLabel.appendChild(document.createTextNode(" Read"));
+
     textContainer.classList.add("textContainer");
-    textContainer.append(titleP, authorP, pagesP);
+    textContainer.append(titleP, authorP, pagesP, isReadLabel);
 
 
     bookDiv.append(imageContainer, textContainer);
@@ -75,9 +82,12 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    data.read = form.read.checked;
-    console.log(data);
+    const book = Object.fromEntries(formData.entries());
+    book.read = form.read.checked;
+
+    const { title, author, pages, read } = book
+
+    console.log(book);
     dialog.close();
 })
 
