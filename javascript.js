@@ -21,49 +21,56 @@ console.log(library);
 
 const books = document.querySelector(".books");
 
-library.forEach(book => {
-    const bookDiv = document.createElement("div");
-    bookDiv.classList.add("book");
+function renderLibrary() {
+    books.innerHTML = "";
 
-    books.appendChild(bookDiv);
+    library.forEach(book => {
+        const bookDiv = document.createElement("div");
+        bookDiv.classList.add("book");
 
-    const { title, author, pages, read } = book;
+        books.appendChild(bookDiv);
 
-    const imageContainer = document.createElement("div");
-    const image = document.createElement("img");
+        const { title, author, pages, read } = book;
 
-    const textContainer = document.createElement("div");
-    const titleP = document.createElement("p");
-    const authorP = document.createElement("p");
-    const pagesP = document.createElement("p");
-    const isRead = document.createElement("input");
-    const isReadLabel = document.createElement("label");
+        const imageContainer = document.createElement("div");
+        const image = document.createElement("img");
 
-    image.setAttribute("src", "images/book.svg");
-    imageContainer.classList.add("imageContainer");
-    imageContainer.appendChild(image);
+        const textContainer = document.createElement("div");
+        const titleP = document.createElement("p");
+        const authorP = document.createElement("p");
+        const pagesP = document.createElement("p");
+        const isRead = document.createElement("input");
+        const isReadLabel = document.createElement("label");
 
-    titleP.textContent = title;
-    titleP.classList.add("bookTitle");
+        image.setAttribute("src", "images/book.svg");
+        imageContainer.classList.add("imageContainer");
+        imageContainer.appendChild(image);
 
-    authorP.textContent = "by: " + author;
-    authorP.classList.add("bookAuthor");
+        titleP.textContent = title;
+        titleP.classList.add("bookTitle");
 
-    pagesP.textContent = pages + " pages";
-    pagesP.classList.add("bookPages");
+        authorP.textContent = "by: " + author;
+        authorP.classList.add("bookAuthor");
 
-    isRead.type = "checkbox";
-    isRead.checked = read;
-    isReadLabel.appendChild(isRead);
-    isReadLabel.appendChild(document.createTextNode(" Read"));
+        pagesP.textContent = pages + " pages";
+        pagesP.classList.add("bookPages");
 
-    textContainer.classList.add("textContainer");
-    textContainer.append(titleP, authorP, pagesP, isReadLabel);
+        isRead.type = "checkbox";
+        isRead.checked = read;
+        isReadLabel.appendChild(isRead);
+        isReadLabel.appendChild(document.createTextNode(" Read"));
+
+        textContainer.classList.add("textContainer");
+        textContainer.append(titleP, authorP, pagesP, isReadLabel);
 
 
-    bookDiv.append(imageContainer, textContainer);
+        bookDiv.append(imageContainer, textContainer);
 
-});
+    });
+}
+
+renderLibrary();
+
 
 const dialog = document.querySelector("dialog");
 const showButton = document.querySelector("dialog + button");
@@ -86,8 +93,8 @@ form.addEventListener("submit", (e) => {
     book.read = form.read.checked;
 
     const { title, author, pages, read } = book
-
-    console.log(book);
+    addBookToLibrary(title, author, pages, read);
+    renderLibrary();
     dialog.close();
 })
 
