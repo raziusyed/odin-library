@@ -97,3 +97,17 @@ body {
     justify-content: center;
     padding: 24px;
 }
+
+dialog {
+    margin: auto;
+}
+
+label {
+    display: inline-block;
+    width: 60px;
+    text-align: right;
+}
+
+form p+p {
+    margin-top: 24px;
+}

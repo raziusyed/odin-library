@@ -58,3 +58,25 @@ library.forEach(book => {
 
 });
 
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("dialog + button");
+const closeButton = document.querySelector("dialog button");
+
+showButton.addEventListener("click", () => {
+    dialog.showModal();
+})
+
+closeButton.addEventListener("click", () => {
+    dialog.close();
+})
+
+const form = document.querySelector("form");
+const formSubmitButton = document.querySelector("button[type='submit']")
+
+formSubmitButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+})
+
