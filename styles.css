@@ -100,14 +100,54 @@ body {
 
 dialog {
     margin: auto;
+    padding: 8px;
+    border-radius: 16px;
+    border: 1px solid;
+}
+
+.dialogContent {
+    display: flex;
+    flex-direction: column;
 }
 
 label {
     display: inline-block;
     width: 60px;
     text-align: right;
+    margin-right: 8px;
+}
+
+form {
+    padding: 16px;
 }
 
 form p+p {
     margin-top: 24px;
+}
+
+.closeButton {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    align-self: flex-end;
+    margin: 0px 0px 16px 16px;
+}
+
+.closeButton svg {
+    width: 25px;
+    height: 25px;
+}
+
+.closeButton svg path {
+    fill: hsl(0, 75%, 50%);
+}
+
+.closeButton svg:hover path {
+    fill: hsla(0, 75%, 50%, 0.75);
+}
+
+button[type='submit'] {
+    padding: 8px 36px;
+    margin: auto;
+    display: block;
 }

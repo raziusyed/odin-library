@@ -71,12 +71,13 @@ closeButton.addEventListener("click", () => {
 })
 
 const form = document.querySelector("form");
-const formSubmitButton = document.querySelector("button[type='submit']")
 
-formSubmitButton.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    data.read = form.read.checked;
     console.log(data);
+    dialog.close();
 })
 
