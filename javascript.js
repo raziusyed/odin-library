@@ -29,20 +29,32 @@ library.forEach(book => {
 
     const { title, author, pages, read } = book;
 
+    const imageContainer = document.createElement("div");
+    const image = document.createElement("img");
+
+    const textContainer = document.createElement("div");
     const titleP = document.createElement("p");
     const authorP = document.createElement("p");
     const pagesP = document.createElement("p");
+
+    image.setAttribute("src", "images/book.svg");
+    imageContainer.classList.add("imageContainer");
+    imageContainer.appendChild(image);
     
     titleP.textContent = title;
     titleP.classList.add("bookTitle");
 
-    authorP.textContent = author;
+    authorP.textContent = "by: " + author;
     authorP.classList.add("bookAuthor");
     
-    pagesP.textContent = pages;
+    pagesP.textContent = pages + " pages";
     pagesP.classList.add("bookPages");
 
-    bookDiv.append(titleP, authorP, pagesP);
+    textContainer.classList.add("textContainer");
+    textContainer.append(titleP, authorP, pagesP);
+
+
+    bookDiv.append(imageContainer, textContainer);
 
 });
 
