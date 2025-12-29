@@ -1,4 +1,5 @@
-const library = [];
+let library = [];
+const books = document.querySelector(".books");
 
 function Book(title, author, pages, read) {
     this.id = crypto.randomUUID();
@@ -8,18 +9,24 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.changeRead = function() {
+    this.read = !this.read;
+}
+
 function addBookToLibrary(title, author, pages, read) {
     const book = new Book(title, author, pages, read);
     library.push(book);
+    renderLibrary();
+}
+
+function deleteBookFromLibrary(id) {
+    library = library.filter(book => book.id !== id);
+    renderLibrary();
 }
 
 addBookToLibrary('Cool book', 'Cool author', 333, true);
 addBookToLibrary('Cool book', 'Cool author', 333, true);
 addBookToLibrary('Cool book', 'Cool author', 333, true);
-
-console.log(library);
-
-const books = document.querySelector(".books");
 
 function renderLibrary() {
     books.innerHTML = "";
@@ -30,21 +37,32 @@ function renderLibrary() {
 
         books.appendChild(bookDiv);
 
-        const { title, author, pages, read } = book;
+        const { id, title, author, pages, read } = book;
 
         const imageContainer = document.createElement("div");
-        const image = document.createElement("img");
-
+        const bookImage = document.createElement("img");
         const textContainer = document.createElement("div");
         const titleP = document.createElement("p");
         const authorP = document.createElement("p");
         const pagesP = document.createElement("p");
         const isRead = document.createElement("input");
         const isReadLabel = document.createElement("label");
+        const deleteBookButton = document.createElement("button");
 
-        image.setAttribute("src", "images/book.svg");
+        deleteBookButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>trash-can</title>
+                <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z" />
+            </svg>
+            `;
+        deleteBookButton.classList.add("deleteBook");
+        deleteBookButton.addEventListener("click", () => {
+            deleteBookFromLibrary(id);
+        })
+
+        bookImage.setAttribute("src", "images/book.svg");
         imageContainer.classList.add("imageContainer");
-        imageContainer.appendChild(image);
+        imageContainer.append(deleteBookButton, bookImage);
 
         titleP.textContent = title;
         titleP.classList.add("bookTitle");
@@ -57,6 +75,10 @@ function renderLibrary() {
 
         isRead.type = "checkbox";
         isRead.checked = read;
+        isRead.addEventListener("change", (e) => {
+            book.changeRead();
+        })
+
         isReadLabel.appendChild(isRead);
         isReadLabel.appendChild(document.createTextNode(" Read"));
 
@@ -65,11 +87,8 @@ function renderLibrary() {
 
 
         bookDiv.append(imageContainer, textContainer);
-
     });
 }
-
-renderLibrary();
 
 
 const dialog = document.querySelector("dialog");
@@ -96,5 +115,6 @@ form.addEventListener("submit", (e) => {
     addBookToLibrary(title, author, pages, read);
     renderLibrary();
     dialog.close();
+    form.reset();
 })
 
